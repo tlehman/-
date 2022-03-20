@@ -1,0 +1,9 @@
+# Block everything
+*
+
+# Except
+!.gitconfig
+!.gitignore
+!.tmux.conf
+!.vimrc
+!.zshrc
