@@ -14,4 +14,7 @@ case `uname` in
 esac
 PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
 
-# this option recomputes the PS1 prompt on every line
+# Go language
+if [ -d /usr/local/go ]; then 
+	export PATH=$PATH:/usr/local/go/bin
+fi
