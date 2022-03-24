@@ -26,19 +26,21 @@ precmd() {
 	# Format the vcs_info_msg_0_ variable
 	zstyle ':vcs_info:*' check-for-changes true
 	
-	# if there are no uncommitted changes
-	if command git diff --quiet HEAD 2> /dev/null; then
-		zstyle ':vcs_info:git:*' formats 'git:%b'
-	elif [[ $(git status --short | grep '^[M ]M' | wc -l) -gt 0 ]]; then
-		# Show red if there are ANY unstanged changes
-		zstyle ':vcs_info:git:*' formats 'git:%b%F{red}*%f'
-	elif [[ $(git status --short | grep '^\W.' | wc -l) -eq 0 ]]; then
-		# If everything is staged, show a green *
-		if [[ $(git status --short | grep '^\w.' | wc -l) -gt 0 ]]; then
-			zstyle ':vcs_info:git:*' formats 'git:%b%F{green}*%f'
+	# Only run this if you are actually _in_ a git repo
+	if command git rev-parse --is-bare-repository > /dev/null; then
+		# if there are no uncommitted changes
+		if command git diff --quiet HEAD 2> /dev/null; then
+			zstyle ':vcs_info:git:*' formats 'git:%b'
+		elif [[ $(git status --short | grep '^[M ]M' | wc -l) -gt 0 ]]; then
+			# Show red if there are ANY unstanged changes
+			zstyle ':vcs_info:git:*' formats 'git:%b%F{red}*%f'
+		elif [[ $(git status --short | grep '^\W.' | wc -l) -eq 0 ]]; then
+			# If everything is staged, show a green *
+			if [[ $(git status --short | grep '^\w.' | wc -l) -gt 0 ]]; then
+				zstyle ':vcs_info:git:*' formats 'git:%b%F{green}*%f'
+			fi
 		fi
 	fi
-
  
 	vcs_info
 }
