@@ -20,6 +20,8 @@ export EDITOR=vim
 ################################################################################
 #                  Git info in the prompt                                      #
 ################################################################################
+# git aliases
+alias g=git
 # Load version control information
 autoload -Uz vcs_info
 precmd() {
@@ -47,6 +49,14 @@ precmd() {
 
 # Set up the prompt (with git branch name)
 setopt PROMPT_SUBST
+
+################################################################################
+#                  Kubernetes (k8s, K8s, k3s, etc,)                            #
+################################################################################
+# k8s aliases
+alias k=kubectl
+autoload -U +X compinit && compinit
+source <(kubectl completion zsh)
 
 # The prompts
 PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
