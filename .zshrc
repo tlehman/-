@@ -12,9 +12,38 @@ case `uname` in
 	;;
 	Linux)
 esac
-PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
 
-# flowlog is for logging what you are doing while in a state of flow. See the .readme.md for more
+################################################################################
+#                  Git info in the prompt                                      #
+################################################################################
+# Load version control information
+autoload -Uz vcs_info
+precmd() {
+	# Format the vcs_info_msg_0_ variable
+	zstyle ':vcs_info:*' check-for-changes true
+	
+	# if there are no uncommitted changes
+	if command git diff-index --quiet HEAD 2> /dev/null; then
+		zstyle ':vcs_info:git:*' formats 'git:%b'
+	else
+		zstyle ':vcs_info:git:*' formats 'git:%b%F{red}*%f'
+	fi
+ 
+	vcs_info
+}
+
+# Set up the prompt (with git branch name)
+setopt PROMPT_SUBST
+
+# The prompts
+PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
+RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
+
+################################################################################
+#                  Flowlog                                                     #
+################################################################################
+# flowlog is for logging what you are doing while in a state of flow. 
+# See the .readme.md for more
 # RECOMMENDED: bind this to a key like <F9>
 flowlog () {
 	echo "$(date +'%Y-%m-%d %H:%M') $(zenity --entry)" >> ~/.flowlog
@@ -27,12 +56,16 @@ if [ -f ~/.flowlog ]; then
 	print "There are $(wc -l ~/.flowlog | awk '{print $1}') lines in .flowlog, please process and delete the file"
 fi
 
-# Go language
+################################################################################
+#                  Go language settings                                        #
+################################################################################
 if [ -d /usr/local/go ]; then 
 	export PATH=$PATH:/usr/local/go/bin
 fi
 
-# Hue bulbs
+################################################################################
+#                  Hue bulbs                                                   #
+################################################################################
 hue_api_get() {
 	curl -s "http://lights/api/$(cat /etc/hueuser)/lights" 
 }
