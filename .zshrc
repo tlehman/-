@@ -29,7 +29,7 @@ precmd() {
 	zstyle ':vcs_info:*' check-for-changes true
 	
 	# Only run this if you are actually _in_ a git repo
-	if command git rev-parse --is-bare-repository > /dev/null; then
+	if command git rev-parse --is-bare-repository 2> /dev/null > /dev/null; then
 		# if there are no uncommitted changes
 		if command git diff --quiet HEAD 2> /dev/null; then
 			zstyle ':vcs_info:git:*' formats 'git:%b'
