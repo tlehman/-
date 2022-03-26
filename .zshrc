@@ -30,16 +30,19 @@ precmd() {
 	
 	# Only run this if you are actually _in_ a git repo
 	if command git rev-parse --is-bare-repository 2> /dev/null > /dev/null; then
+		# show first 4 chars of HEAD commit
+		head=$(git rev-parse HEAD | cut -c -4)
+		git="git($head…)"
 		# if there are no uncommitted changes
 		if command git diff --quiet HEAD 2> /dev/null; then
-			zstyle ':vcs_info:git:*' formats 'git:%b'
+			zstyle ':vcs_info:git:*' formats "$git:%b"
 		elif [[ $(git status --short | grep '^[M ]M' | wc -l) -gt 0 ]]; then
 			# Show red if there are ANY unstanged changes
-			zstyle ':vcs_info:git:*' formats 'git:%b%F{red}*%f'
+			zstyle ':vcs_info:git:*' formats "$git:%b%F{red}*%f"
 		elif [[ $(git status --short | grep '^\W.' | wc -l) -eq 0 ]]; then
 			# If everything is staged, show a green *
 			if [[ $(git status --short | grep '^\w.' | wc -l) -gt 0 ]]; then
-				zstyle ':vcs_info:git:*' formats 'git:%b%F{green}*%f'
+				zstyle ':vcs_info:git:*' formats "$git:%b%F{green}*%f"
 			fi
 		fi
 	fi
