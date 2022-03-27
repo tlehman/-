@@ -6,5 +6,6 @@
 !.gitignore
 !.tmux.conf
 !.vimrc
+!.vim/pack/**/*
 !.zshrc
 !.ssh/config

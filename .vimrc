@@ -14,3 +14,9 @@ highlight CursorLine guibg=#303000 ctermbg=234
 " Programming Language Support
 "source /Users/tobi/.vim/godoc.vim
 "autocmd BufNewFile,BufRead *.go map ,d :Godoc<CR>
+
+" Packages
+"  NERDTree 
+"    % vim -u NONE -c "helptags ~/.vim/pack/vendor/start/nerdtree/doc" -c q
+
+
