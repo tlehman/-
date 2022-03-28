@@ -6,7 +6,7 @@
 #                  Check dependencies                                          #
 ################################################################################
 typeset -a DEPS
-DEPS=("zsh" "git" "ssh" "jq" "yq")
+DEPS=("zsh" "git" "ssh" "jq" "fq" "yq")
 declare -A DEPURLS
 for ((i = 1; i <= $#DEPS; i++)) {
 	if command which $DEPS[i] &> /dev/null; then
