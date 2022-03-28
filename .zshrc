@@ -1,17 +1,22 @@
-case `uname` in
-	Darwin)
+################################################################################
+#   tobi's zsh config                                                          #
+#                                                                              #
+#                                                                              #
+################################################################################
+#                  Check dependencies                                          #
+################################################################################
+typeset -a DEPS
+DEPS=("zsh" "git" "ssh" "jq" "yq")
+declare -A DEPURLS
+for ((i = 1; i <= $#DEPS; i++)) {
+	if command which $DEPS[i] &> /dev/null; then
+		# yay, nothing to do here
+	else
+		dep=$DEPS[i]
+		print "$dep is not installed"
+    fi
+}
 
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	export PATH=$PATH:~/Downloads/cwebx/
-	alias code='open -a Visual\ Studio\ Code'
-	
-	# K8s auto-complete
-	autoload -U +X compinit && compinit
-	source <(kubectl completion zsh)
-	source <(kind completion zsh)
-	;;
-	Linux)
-esac
 ################################################################################
 #                  Variables                                                   #
 ################################################################################
@@ -110,3 +115,21 @@ office_off() {
 office_on() {
 	for light in $(seq 24 26); do hue_set $light true; done
 }
+
+################################################################################
+#                  OS-specific stuff                                           #
+################################################################################
+case `uname` in
+	Darwin)
+
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	export PATH=$PATH:~/Downloads/cwebx/
+	alias code='open -a Visual\ Studio\ Code'
+	
+	# K8s auto-complete
+	autoload -U +X compinit && compinit
+	source <(kubectl completion zsh)
+	source <(kind completion zsh)
+	;;
+	Linux)
+esac
