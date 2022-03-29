@@ -96,7 +96,7 @@ fi
 #                  Go language settings                                        #
 ################################################################################
 if [ -d /usr/local/go ]; then 
-	export PATH=$PATH:~/go/bin/
+	export PATH=$PATH:~/go/bin/:/usr/local/go/bin
 fi
 
 ################################################################################
