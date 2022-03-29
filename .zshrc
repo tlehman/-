@@ -55,8 +55,6 @@ precmd() {
 	vcs_info
 }
 
-# Set up the prompt (with git branch name)
-setopt PROMPT_SUBST
 
 ################################################################################
 #                  Kubernetes (k8s, K8s, k3s, etc,)                            #
@@ -66,8 +64,14 @@ alias k=kubectl
 autoload -U +X compinit && compinit
 source <(kubectl completion zsh)
 
-# The prompts
-PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
+################################################################################
+#                  The PROMPTS                                                 #
+################################################################################
+setopt PROMPT_SUBST
+#PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
+
+# https://unix.stackexchange.com/a/273567 (shorten pwd after 4 levels deep)
+PROMPT="%F{green}%n@%m%f:%F{cyan}%(4~|.../%3~|%~)%f %% "
 RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
 
 ################################################################################
