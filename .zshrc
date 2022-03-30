@@ -22,7 +22,7 @@ for ((i = 1; i <= $#DEPS; i++)) {
 ################################################################################
 export EDITOR=vim
 function paths() { echo $PATH | tr ':' '\n' | sort }
-alias ls='/usr/bin/ls --color'
+alias ls='/bin/ls --color'
 
 ################################################################################
 #                  Git info in the prompt                                      #
