@@ -6,8 +6,7 @@
 #                  Check dependencies                                          #
 ################################################################################
 typeset -a DEPS
-DEPS=("zsh" "git" "ssh" "jq" "fq" "yq")
-declare -A DEPURLS
+DEPS=("zsh" "git" "ssh" "tmux" "jq" "fq" "yq" "fzf")
 for ((i = 1; i <= $#DEPS; i++)) {
 	if command which $DEPS[i] &> /dev/null; then
 		# yay, nothing to do here
@@ -21,6 +20,11 @@ for ((i = 1; i <= $#DEPS; i++)) {
 #                  Variables and variable-related utils                        #
 ################################################################################
 export EDITOR=vim
+
+# Prevent tmux from using vi keybindings:
+#    http://matija.suklje.name/zsh-vi-and-emacs-modes
+bindkey -e 
+
 function paths() { echo $PATH | tr ':' '\n' | sort }
 alias ls='/bin/ls --color'
 
