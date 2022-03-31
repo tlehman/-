@@ -28,6 +28,10 @@ bindkey -e
 function paths() { echo $PATH | tr ':' '\n' | sort }
 alias ls='/bin/ls --color'
 
+if [[ -f ~/dl/local.yaml ]]; then
+	export KUBECONFIG=~/dl/local.yaml
+fi
+
 ################################################################################
 #                  Git info in the prompt                                      #
 ################################################################################
