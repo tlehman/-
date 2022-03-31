@@ -3,6 +3,23 @@
 #                                                                              #
 #                                                                              #
 ################################################################################
+#                  OS-specific stuff                                           #
+################################################################################
+case `uname` in
+	Darwin)
+
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	export PATH=$PATH:~/Downloads/cwebx/
+	alias code='open -a Visual\ Studio\ Code'
+	
+	# K8s auto-complete
+	autoload -U +X compinit && compinit
+	source <(kubectl completion zsh)
+	source <(kind completion zsh)
+	;;
+	Linux)
+esac
+################################################################################
 #                  Check dependencies                                          #
 ################################################################################
 typeset -a DEPS
@@ -130,20 +147,3 @@ office_on() {
 	for light in $(seq 24 26); do hue_set $light true; done
 }
 
-################################################################################
-#                  OS-specific stuff                                           #
-################################################################################
-case `uname` in
-	Darwin)
-
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	export PATH=$PATH:~/Downloads/cwebx/
-	alias code='open -a Visual\ Studio\ Code'
-	
-	# K8s auto-complete
-	autoload -U +X compinit && compinit
-	source <(kubectl completion zsh)
-	source <(kind completion zsh)
-	;;
-	Linux)
-esac
