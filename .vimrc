@@ -11,6 +11,9 @@ set autoindent
 set cursorline
 autocmd WinEnter * setlocal cursorline
 
+" FZF (Fuzzy Find)
+map <C-p> :FZF<CR>
+
 
 " Docker/Dapper 
 autocmd BufNewFile,BufRead *.dapper set syntax=dockerfile
