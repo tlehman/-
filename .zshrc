@@ -94,6 +94,10 @@ precmd() {
 ################################################################################
 # k8s aliases
 alias k=kubectl
+if command $(which helm > /dev/null); then
+	source <(kubectl completion zsh)
+	source <(helm completion zsh)
+fi
 
 ################################################################################
 #                  The PROMPTS                                                 #
