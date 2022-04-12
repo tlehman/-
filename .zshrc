@@ -94,7 +94,7 @@ precmd() {
 ################################################################################
 # k8s aliases
 alias k=kubectl
-if command $(which helm > /dev/null); then
+if ! command $(type -p "helm" > /dev/null); then
 	source <(kubectl completion zsh)
 	source <(helm completion zsh)
 fi
@@ -130,7 +130,7 @@ fi
 #                  Go language settings                                        #
 ################################################################################
 if [ -d /usr/local/go ]; then 
-	export PATH=$PATH:~/go/bin/:/usr/local/go/bin
+	export PATH=$PATH:~/go/bin:/usr/local/go/bin
 fi
 
 ################################################################################
