@@ -2,7 +2,7 @@
 *
 
 # Except
-!.gitconfig
+!.gitconfig.generate.sh
 !.gitignore
 !.tmux.conf
 !.vimrc
