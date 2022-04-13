@@ -113,7 +113,7 @@ RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
 # Current Kubernetes Context
 kubectx() { k config view --minify | yq .current-context }
 
-if (( ${+KUBECONFIG} )); then 
+if command kubectl --insecure-skip-tls-verify config view >/dev/null; then 
 	RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
 fi
 
