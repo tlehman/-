@@ -51,8 +51,8 @@ bindkey -e
 function paths() { echo $PATH | tr ':' '\n' | sort }
 alias ls='/bin/ls --color'
 
-if [[ -f ~/dl/local.yaml ]]; then
-	export KUBECONFIG=~/dl/local.yaml
+if [[ -f ~/etc/local.yaml ]]; then
+	export KUBECONFIG=~/etc/local.yaml
 fi
 
 ################################################################################
@@ -93,7 +93,7 @@ precmd() {
 #                  Kubernetes (k8s, K8s, k3s, etc,)                            #
 ################################################################################
 # k8s aliases
-alias k=kubectl
+alias k='kubectl --insecure-skip-tls-verify'
 if ! command $(type -p "helm" > /dev/null); then
 	source <(kubectl completion zsh)
 	source <(helm completion zsh)
@@ -105,9 +105,17 @@ fi
 setopt PROMPT_SUBST
 #PROMPT="%F{green}%n@%m%f:%F{cyan}%~%f %% "
 
+
 # https://unix.stackexchange.com/a/273567 (shorten pwd after 4 levels deep)
 PROMPT="%F{green}%n@%m%f:%F{cyan}%(4~|.../%3~|%~)%f %% "
 RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
+
+# Current Kubernetes Context
+kubectx() { k config view --minify | yq .current-context }
+
+if (( ${+KUBECONFIG} )); then 
+	RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
+fi
 
 ################################################################################
 #                  Flowlog                                                     #
