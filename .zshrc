@@ -3,6 +3,25 @@
 #                                                                              #
 #                                                                              #
 ################################################################################
+#                  Variables and variable-related utils                        #
+################################################################################
+export EDITOR=vim
+
+# Prevent tmux from using vi keybindings:
+#    http://matija.suklje.name/zsh-vi-and-emacs-modes
+bindkey -e 
+
+function paths() { echo $PATH | tr ':' '\n' | sort }
+alias ls='/bin/ls --color'
+
+if [[ -f ~/etc/local.yaml ]]; then
+	export KUBECONFIG=~/etc/local.yaml
+fi
+if [[ -d ~/bin ]]; then
+	export PATH=$PATH:~/bin
+fi
+
+################################################################################
 #                  OS-specific stuff                                           #
 ################################################################################
 case `uname` in
@@ -24,6 +43,9 @@ esac
 ################################################################################
 autoload -U +X compinit && compinit
 source <(kubectl completion zsh)
+if command which helm &> /dev/null; then
+	source <(helm completion zsh)
+fi
 
 ################################################################################
 #                  Check dependencies                                          #
@@ -38,23 +60,6 @@ for ((i = 1; i <= $#DEPS; i++)) {
 		print "$dep is not installed"
     fi
 }
-
-################################################################################
-#                  Variables and variable-related utils                        #
-################################################################################
-export EDITOR=vim
-
-# Prevent tmux from using vi keybindings:
-#    http://matija.suklje.name/zsh-vi-and-emacs-modes
-bindkey -e 
-
-function paths() { echo $PATH | tr ':' '\n' | sort }
-alias ls='/bin/ls --color'
-
-if [[ -f ~/etc/local.yaml ]]; then
-	export KUBECONFIG=~/etc/local.yaml
-fi
-
 ################################################################################
 #                  Git info in the prompt                                      #
 ################################################################################
