@@ -21,6 +21,7 @@ if [[ -d ~/bin ]]; then
 	export PATH=$PATH:~/bin
 fi
 
+
 ################################################################################
 #                  OS-specific stuff                                           #
 ################################################################################
@@ -172,3 +173,34 @@ office_on() {
 #                  Time                                                        #
 ################################################################################
 function nows() { date -u "+%Y-%m-%d %R UTC"; date "+%Y-%m-%d %R %Z"; }
+
+################################################################################
+#                  Buffer shortcuts                                            #
+################################################################################
+function buffer-insert-date() {
+	BUFFER+="$(date +'%Y-%m-%d')"
+}
+function buffer-insert-datetime() {
+	BUFFER+="$(date +'%Y-%m-%d %H:%M:%S')"
+}
+function buffer-kubectl-get-expand() {
+	if [ "$BUFFER" = "kgs" ]; then
+		zle backward-delete-word
+		BUFFER+='k get services'
+	elif [ "$BUFFER" = "kgn" ]; then
+		zle backward-delete-word
+		BUFFER+='k get nodes'
+	elif [ "$BUFFER" = "kgp" ]; then
+		zle backward-delete-word
+		BUFFER+='k get pods'
+	elif [ "$BUFFER" = "kc" ]; then
+		zle backward-delete-word
+		BUFFER+='k cluster-info'
+	fi
+}
+zle -N buffer-insert-date
+zle -N buffer-insert-datetime
+zle -N buffer-kubectl-get-expand
+bindkey $'^T' buffer-insert-date
+bindkey $'^[d' buffer-insert-datetime
+bindkey $'^[k' buffer-kubectl-get-expand
