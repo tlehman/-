@@ -183,6 +183,9 @@ function buffer-insert-date() {
 function buffer-insert-datetime() {
 	BUFFER+="$(date +'%Y-%m-%d %H:%M:%S')"
 }
+function buffer-insert-192-168-1() {
+	LBUFFER+="192.168.1."
+}
 function buffer-kubectl-get-expand() {
 	if [ "$BUFFER" = "kgs" ]; then
 		zle backward-delete-word
@@ -201,6 +204,8 @@ function buffer-kubectl-get-expand() {
 zle -N buffer-insert-date
 zle -N buffer-insert-datetime
 zle -N buffer-kubectl-get-expand
+zle -N buffer-insert-192-168-1
 bindkey $'^T' buffer-insert-date
 bindkey $'^[d' buffer-insert-datetime
 bindkey $'^[k' buffer-kubectl-get-expand
+bindkey $'^[9' buffer-insert-192-168-1
