@@ -25,7 +25,6 @@ fi
 #                  ZSH history                                                 #
 ################################################################################
 
-
 ################################################################################
 #                  OS-specific stuff                                           #
 ################################################################################
@@ -219,7 +218,7 @@ zle -N buffer-kubectl-get-expand
 zle -N buffer-insert-192-168-1
 zle -N buffer-accept-line-expand-ls
 bindkey $'^T' buffer-insert-date
-bindkey $'^[d' buffer-insert-datetime
+#bindkey $'^[d' buffer-insert-datetime <alt>-d is delete, don't override it
 bindkey $'^[k' buffer-kubectl-get-expand
 bindkey $'^[9' buffer-insert-192-168-1
 bindkey $'^[l' buffer-accept-line-expand-ls
