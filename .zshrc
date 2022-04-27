@@ -24,6 +24,14 @@ fi
 ################################################################################
 #                  ZSH history                                                 #
 ################################################################################
+export HISTFILE=/home/tobi/.zhistory
+export HISTSIZE=10000
+export SAVEHIST=50000
+# Appends every command to the history file once it is executed
+setopt inc_append_history
+# Reloads the history whenever you use it
+setopt share_history
+
 
 ################################################################################
 #                  OS-specific stuff                                           #
