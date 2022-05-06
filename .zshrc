@@ -110,7 +110,8 @@ precmd() {
 #                  Kubernetes (k8s, K8s, k3s, etc,)                            #
 ################################################################################
 # k8s aliases
-alias k='kubectl --insecure-skip-tls-verify'
+#alias k='kubectl --insecure-skip-tls-verify'
+alias k=kubectl
 if ! command $(type -p "helm" > /dev/null); then
 	source <(kubectl completion zsh)
 	source <(helm completion zsh)
