@@ -221,13 +221,19 @@ function buffer-accept-line-expand-ls() {
 		zle accept-line
 	fi
 }
+# append '-o yaml | yq'
+function buffer-append-yaml() {
+	BUFFER+='-o yaml | yq'
+}
 zle -N buffer-insert-date
 zle -N buffer-insert-datetime
 zle -N buffer-kubectl-get-expand
 zle -N buffer-insert-192-168-1
 zle -N buffer-accept-line-expand-ls
+zle -N buffer-append-yaml
 bindkey $'^T' buffer-insert-date
 #bindkey $'^[d' buffer-insert-datetime <alt>-d is delete, don't override it
 bindkey $'^[k' buffer-kubectl-get-expand
 bindkey $'^[9' buffer-insert-192-168-1
 bindkey $'^[l' buffer-accept-line-expand-ls
+bindkey $'^[y' buffer-append-yaml
