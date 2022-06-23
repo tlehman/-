@@ -9,7 +9,7 @@ export EDITOR=vim
 
 # Prevent tmux from using vi keybindings:
 #    http://matija.suklje.name/zsh-vi-and-emacs-modes
-bindkey -e 
+bindkey -e
 
 function paths() { echo $PATH | tr ':' '\n' | sort }
 alias ls='/bin/ls --color'
@@ -42,7 +42,7 @@ case `uname` in
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 	export PATH=$PATH:~/Downloads/cwebx/
 	alias code='open -a Visual\ Studio\ Code'
-	
+
 	# K8s auto-complete
 	autoload -U +X compinit && compinit
 	source <(kubectl completion zsh)
@@ -82,7 +82,7 @@ autoload -Uz vcs_info
 precmd() {
 	# Format the vcs_info_msg_0_ variable
 	zstyle ':vcs_info:*' check-for-changes true
-	
+
 	# Only run this if you are actually _in_ a git repo
 	if command git rev-parse --is-bare-repository 2> /dev/null > /dev/null; then
 		# show first 4 chars of HEAD commit
@@ -138,13 +138,13 @@ fi
 ################################################################################
 #                  Flowlog                                                     #
 ################################################################################
-# flowlog is for logging what you are doing while in a state of flow. 
+# flowlog is for logging what you are doing while in a state of flow.
 # See the .readme.md for more
 # RECOMMENDED: bind this to a key like <F9>
 flowlog () {
 	echo "$(date +'%Y-%m-%d %H:%M') $(zenity --entry)" >> ~/.flowlog
-	# NOTE: ~/.flowlog should be local, not checked into the repo, 
-    # the goal is a log you can revisit, clean up and summarize 
+	# NOTE: ~/.flowlog should be local, not checked into the repo,
+    # the goal is a log you can revisit, clean up and summarize
     # in your central note-keeping software
 }
 alias fl=flowlog
@@ -155,7 +155,7 @@ fi
 ################################################################################
 #                  Go language settings                                        #
 ################################################################################
-if [ -d /usr/local/go ]; then 
+if [ -d /usr/local/go ]; then
 	export PATH=$PATH:~/go/bin:/usr/local/go/bin
 fi
 
@@ -163,7 +163,7 @@ fi
 #                  Hue bulbs                                                   #
 ################################################################################
 hue_api_get() {
-	curl -s "http://lights/api/$(cat /etc/hueuser)/lights" 
+	curl -s "http://lights/api/$(cat /etc/hueuser)/lights"
 }
 hue_lights_ls_on() {
 	hue_api_get | jq '.[] | {name: .name, on: .state.on} | select(.on == true)'
@@ -231,7 +231,7 @@ zle -N buffer-kubectl-get-expand
 zle -N buffer-insert-192-168-1
 zle -N buffer-accept-line-expand-ls
 zle -N buffer-append-yaml
-bindkey $'^T' buffer-insert-date
+#bindkey $'^T' buffer-insert-date
 #bindkey $'^[d' buffer-insert-datetime <alt>-d is delete, don't override it
 bindkey $'^[k' buffer-kubectl-get-expand
 bindkey $'^[9' buffer-insert-192-168-1
