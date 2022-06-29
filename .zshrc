@@ -5,7 +5,22 @@
 ################################################################################
 #                  Variables and variable-related utils                        #
 ################################################################################
-export EDITOR=vim
+# editor stuff
+# e(1) is a shortcut to find or open a new instance of emacs
+function e() {
+	# try to find the open one
+	/usr/bin/wmctrl -R 'emacs'
+	# if there isn't one open, then status code will be >0
+	if [ $? -eq 0 ]; then
+        # the $# var is like argc for shell scripts
+        if [ $# -gt 0 ]; then
+            emacsclient -n $1
+        fi
+	else
+		emacs $1 &
+	fi
+}
+export EDITOR=e
 
 # Prevent tmux from using vi keybindings:
 #    http://matija.suklje.name/zsh-vi-and-emacs-modes
@@ -133,23 +148,6 @@ kubectx() { k config view --minify | yq .current-context }
 
 if command kubectl --insecure-skip-tls-verify config view >/dev/null; then 
 	RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
-fi
-
-################################################################################
-#                  Flowlog                                                     #
-################################################################################
-# flowlog is for logging what you are doing while in a state of flow.
-# See the .readme.md for more
-# RECOMMENDED: bind this to a key like <F9>
-flowlog () {
-	echo "$(date +'%Y-%m-%d %H:%M') $(zenity --entry)" >> ~/.flowlog
-	# NOTE: ~/.flowlog should be local, not checked into the repo,
-    # the goal is a log you can revisit, clean up and summarize
-    # in your central note-keeping software
-}
-alias fl=flowlog
-if [ -f ~/.flowlog ]; then
-	print "There are $(wc -l ~/.flowlog | awk '{print $1}') lines in .flowlog, please process and delete the file"
 fi
 
 ################################################################################
