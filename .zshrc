@@ -20,11 +20,12 @@ function e() {
 		emacs $1 &
 	fi
 }
-export EDITOR=e
+export EDITOR=emacsclient
 
 # Prevent tmux from using vi keybindings:
 #    http://matija.suklje.name/zsh-vi-and-emacs-modes
 bindkey -e
+
 
 function paths() { echo $PATH | tr ':' '\n' | sort }
 alias ls='/bin/ls --color'
@@ -235,3 +236,5 @@ bindkey $'^[k' buffer-kubectl-get-expand
 bindkey $'^[9' buffer-insert-192-168-1
 bindkey $'^[l' buffer-accept-line-expand-ls
 bindkey $'^[y' buffer-append-yaml
+
+bindkey '^r' history-incremental-search-backward

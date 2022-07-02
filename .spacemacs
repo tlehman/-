@@ -44,6 +44,7 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      helm
+     hexl
      lsp
      markdown
      multiple-cursors
@@ -571,6 +572,7 @@ before packages are loaded."
   (with-eval-after-load 'org
     ;; Org config goes here
     ;; ....
+    (setq org-roam-directory (file-truename "~/sync/notes"))
     (org-roam-db-autosync-mode)
     (spacemacs/declare-prefix "o" "org-roam-capture")
     (spacemacs/set-leader-keys "oc" 'org-roam-capture)
