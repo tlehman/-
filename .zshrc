@@ -20,7 +20,7 @@ function e() {
 		emacs $1 &
 	fi
 }
-export EDITOR=emacsclient
+export EDITOR=vim
 
 # Prevent tmux from using vi keybindings:
 #    http://matija.suklje.name/zsh-vi-and-emacs-modes
@@ -197,6 +197,9 @@ function buffer-insert-datetime() {
 function buffer-insert-192-168-1() {
 	LBUFFER+="192.168.1."
 }
+function buffer-insert-lehman-house() {
+	LBUFFER+="lehman.house"
+}
 function buffer-kubectl-get-expand() {
 	if [ "$BUFFER" = "kgs" ]; then
 		zle backward-delete-word
@@ -212,12 +215,15 @@ function buffer-kubectl-get-expand() {
 		BUFFER+='k cluster-info'
 	fi
 }
-# type 'lsth' and then <Alt>-l to expand and enter
 function buffer-accept-line-expand-ls() {
+	# type 'lsth' and then <Alt>-l to expand and enter
 	if [ "$BUFFER" = "lsth" ]; then
 		zle backward-delete-word
 		BUFFER+='ls -t | head -4'
 		zle accept-line
+	else 
+		# otherwise insert "lehman.house"
+		buffer-insert-lehman-house
 	fi
 }
 # append '-o yaml | yq'
