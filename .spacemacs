@@ -575,7 +575,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
           (set-variable 'is-shell-window-open nil))
       (progn
         (split-window-below-and-focus)
-        (term "/usr/bin/zsh")
+        (term "/bin/zsh")
         (set-variable 'is-shell-window-open t)
         )))
   (global-set-key (kbd "C-`") 'open-shell-below)
