@@ -162,7 +162,7 @@ fi
 #                  Hue bulbs                                                   #
 ################################################################################
 hue_api_get() {
-	curl -s "http://lights/api/$(cat /etc/hueuser)/lights"
+	curl -s "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights"
 }
 hue_lights_ls_on() {
 	hue_api_get | jq '.[] | {name: .name, on: .state.on} | select(.on == true)'
@@ -171,7 +171,7 @@ hue_lights_ls_off() {
 	hue_api_get | jq '.[] | {name: .name, on: .state.on} | select(.on == false)'
 }
 hue_set() {
-	curl -s -X PUT "http://lights/api/$(cat /etc/hueuser)/lights/$1/state" -d "{\"on\": $2}"
+	curl -s -X PUT "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights/$1/state" -d "{\"on\": $2}"
 }
 office_off() {
 	for light in $(seq 24 26); do hue_set $light false; done
