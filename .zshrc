@@ -161,6 +161,7 @@ fi
 ################################################################################
 #                  Hue bulbs                                                   #
 ################################################################################
+hue_day="{\"bri\": 254, \"hue\": 40010, \"sat\": 22}"
 hue_api_get() {
 	curl -s "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights"
 }
@@ -171,10 +172,27 @@ hue_lights_ls_off() {
 	hue_api_get | jq '.[] | {name: .name, on: .state.on} | select(.on == false)'
 }
 hue_set() {
-	curl -s -X PUT "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights/$1/state" -d "{\"on\": $2}"
+    light_id=$1
+    on=$2
+    bri=$3
+    hue=$4
+    sat=$5
+    if [ -z $bri ]; then
+	    curl -s -X PUT "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights/$1/state" -d \
+             "{\"on\": $on}"
+    else
+	    curl -s -X PUT "http://lights.lehman.house/api/$(cat /etc/hueuser)/lights/$1/state" -d \
+             "{\"on\": $on, \"bri\": $bri, \"hue\": $hue, \"sat\":$sat}"
+    fi
+}
+hue_set_bri_office() {
+	for light in $(seq 24 26); do hue_set $light true 254 40010 22; done
 }
 office_off() {
 	for light in $(seq 24 26); do hue_set $light false; done
+}
+office_on() {
+	for light in $(seq 24 26); do hue_set $light true; done
 }
 office_on() {
 	for light in $(seq 24 26); do hue_set $light true; done
