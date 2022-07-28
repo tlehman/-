@@ -28,7 +28,7 @@ bindkey -e
 
 
 function paths() { echo $PATH | tr ':' '\n' | sort }
-alias ls='/bin/ls --color'
+#alias ls='/bin/ls --color'
 
 if [[ -f ~/etc/local.yaml ]]; then
 	export KUBECONFIG=~/etc/local.yaml
