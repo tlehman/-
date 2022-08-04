@@ -154,6 +154,7 @@ fi
 ################################################################################
 #                  Go language settings                                        #
 ################################################################################
+export GO111MODULE=on
 if [ -d /usr/local/go ]; then
 	export PATH=$PATH:~/go/bin:/usr/local/go/bin
 fi
