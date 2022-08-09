@@ -44,7 +44,6 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      helm
-     hexl
      lsp
      markdown
      multiple-cursors
