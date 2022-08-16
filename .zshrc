@@ -263,3 +263,12 @@ bindkey $'^[l' buffer-accept-line-expand-ls
 bindkey $'^[y' buffer-append-yaml
 
 bindkey '^r' history-incremental-search-backward
+################################################################################
+#                  Z                                                           #
+################################################################################
+if [[ ! -f /tmp/zsh-z.plugin.zsh ]]; then
+	echo "Downloading zsh-z plugin"
+	wget https://raw.githubusercontent.com/agkozak/zsh-z/master/zsh-z.plugin.zsh
+	mv zsh-z.plugin.zsh /tmp
+fi
+source /tmp/zsh-z.plugin.zsh
