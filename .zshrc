@@ -5,6 +5,7 @@
 ################################################################################
 #                  Variables and variable-related utils                        #
 ################################################################################
+export GPG_TTY=$(tty) # makes 'git commit -S' work with curses
 # editor stuff
 # e(1) is a shortcut to find or open a new instance of emacs
 function e() {
@@ -272,3 +273,4 @@ if [[ ! -f /tmp/zsh-z.plugin.zsh ]]; then
 	mv zsh-z.plugin.zsh /tmp
 fi
 source /tmp/zsh-z.plugin.zsh
+
