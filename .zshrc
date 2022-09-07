@@ -267,10 +267,10 @@ bindkey '^r' history-incremental-search-backward
 ################################################################################
 #                  Z                                                           #
 ################################################################################
-if [[ ! -f /tmp/zsh-z.plugin.zsh ]]; then
+mkdir ~/bin
+if [[ ! -f ~/bin/zsh-z.plugin.zsh ]]; then
 	echo "Downloading zsh-z plugin"
-	wget https://raw.githubusercontent.com/agkozak/zsh-z/master/zsh-z.plugin.zsh
-	mv zsh-z.plugin.zsh /tmp
+	(cd ~/bin && wget https://raw.githubusercontent.com/agkozak/zsh-z/master/zsh-z.plugin.zsh)
 fi
-source /tmp/zsh-z.plugin.zsh
+source ~/bin/zsh-z.plugin.zsh
 
