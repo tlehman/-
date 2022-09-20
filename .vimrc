@@ -2,7 +2,7 @@ syntax on
 
 set mouse=a
 set tabstop=4
-set number
+"set number
 set hlsearch
 set incsearch
 set autoindent
@@ -20,7 +20,7 @@ autocmd BufNewFile,BufRead *.dapper set syntax=dockerfile
 
 
 " Cursor line
-colorscheme ron
+"colorscheme ron
 highlight CursorLine cterm=none ctermbg=234
 
 function LightMode()
