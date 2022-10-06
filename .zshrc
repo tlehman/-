@@ -62,7 +62,9 @@ case `uname` in
 
 	# K8s auto-complete
 	autoload -U +X compinit && compinit
-	source <(kubectl completion zsh)
+    if command which kubectl &> /dev/null; then 
+		source <(kubectl completion zsh)
+	fi
 	source <(kind completion zsh)
 	;;
 	Linux)
@@ -71,7 +73,9 @@ esac
 #                  Tab completion                                              #
 ################################################################################
 autoload -U +X compinit && compinit
-source <(kubectl completion zsh)
+if command which kubectl &> /dev/null; then 
+	source <(kubectl completion zsh)
+fi
 if command which helm &> /dev/null; then
 	source <(helm completion zsh)
 fi
@@ -148,8 +152,10 @@ RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
 # Current Kubernetes Context
 kubectx() { k config view --minify | yq .current-context }
 
-if command kubectl --insecure-skip-tls-verify config view >/dev/null; then 
-	RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
+if command which kubectl &>/dev/null; then 
+	if command kubectl --insecure-skip-tls-verify config view >/dev/null; then 
+		RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
+	fi
 fi
 
 ################################################################################
