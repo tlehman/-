@@ -220,10 +220,16 @@ function buffer-insert-192-168-1() {
 function buffer-insert-lehman-house() {
 	LBUFFER+="lehman.house"
 }
+function buffer-insert-harvester-system() {
+	LBUFFER+="harvester-system"
+}
 function buffer-kubectl-get-expand() {
 	if [ "$BUFFER" = "kgs" ]; then
 		zle backward-delete-word
 		BUFFER+='k get services'
+	elif [ "$BUFFER" = "khs" ]; then
+		zle backward-delete-word
+		BUFFER+='k -n harvester-system'
 	elif [ "$BUFFER" = "kgn" ]; then
 		zle backward-delete-word
 		BUFFER+='k get nodes'
@@ -256,12 +262,14 @@ zle -N buffer-kubectl-get-expand
 zle -N buffer-insert-192-168-1
 zle -N buffer-accept-line-expand-ls
 zle -N buffer-append-yaml
+zle -N buffer-insert-harvester-system
 #bindkey $'^T' buffer-insert-date
 #bindkey $'^[d' buffer-insert-datetime <alt>-d is delete, don't override it
 bindkey $'^[k' buffer-kubectl-get-expand
 bindkey $'^[9' buffer-insert-192-168-1
 bindkey $'^[l' buffer-accept-line-expand-ls
 bindkey $'^[y' buffer-append-yaml
+bindkey $'^[s' buffer-insert-harvester-system
 
 bindkey '^r' history-incremental-search-backward
 ################################################################################
