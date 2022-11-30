@@ -4,7 +4,8 @@
 # Except
 !.gitconfig.generate.sh
 !.gitignore
-!.spacemacs
+!.emacs
+!.emacs.org
 !.tmux.conf
 !.vimrc
 !.vim/pack/**/*
