@@ -141,8 +141,10 @@ The packages that my emacs configuration depends on are in the list below
 To convert the above table of dependencies into the Emacs Lisp list that
 will get put into the .emacs config file, run ~~C-c C-c~~, then
 **remember to append ":tangle .emacs" to the results**
-#+begin_src emacs-lisp :var tbl=deps-table :results code :shebang ":tangle .emacs"
-(mapcar #'car tbl) 
+#+begin_src emacs-lisp :var tbl=deps-table :results code :shebang :tangle .emacs
+  (defvar deps-tbl (mapcar #'car tbl))
+
+  deps-tbl
 #+end_src
 
 #+RESULTS:
