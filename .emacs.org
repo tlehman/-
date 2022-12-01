@@ -56,6 +56,23 @@ The font is Fira Code, height 140
   (scroll-bar-mode -1)
 #+end_src
 
+** Backup
+By default emacs puts \~files~\ everywhere in your fs tree.
+
+#+begin_src emacs-lisp :tangle .emacs
+
+  (if (not (file-exists-p "~/.saves"))
+      (make-directory "~/.saves"))
+
+  (setq
+      backup-by-copying t      ; don't clobber symlinks
+      backup-directory-alist
+      '(("." . "~/.saves/"))    ; don't litter my fs tree
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)       ; use versioned backups
+#+end_src
 ** Custom Functions
 *** Org-mode insert src block
 This is to insert a begin_src into an org document.
@@ -109,6 +126,30 @@ Then we define the ~~open-shell-below~~ function:
       (set-variable 'is-shell-window-open t))))
 #+end_src
 
+** Dependencies
+The packages that my emacs configuration depends on are in the list below
+
+#+name: deps-table
+| Package Name  | Repository | Note             |
+|---------------+------------+------------------|
+| evil          | elpa       | Vim mode         |
+| evil-org      | elpa       | Vim/Org compat.  |
+| markdown-mode | elpa       | Markdown support |
+| magit         | elpa       | Git mode         |
+| org-roam      | melpa      | Roam-style Org   |
+
+To convert the above table of dependencies into the Emacs Lisp list that
+will get put into the .emacs config file, run ~~C-c C-c~~, then
+**remember to append ":tangle .emacs" to the results**
+#+begin_src emacs-lisp :var tbl=deps-table :results code :shebang ":tangle .emacs"
+(mapcar #'car tbl) 
+#+end_src
+
+#+RESULTS:
+#+begin_src emacs-lisp
+("evil" "evil-org" "markdown-mode" "magit" "org-roam")
+#+end_src
+
 ** Mappings
 These are the custom keymappings I use.
 *** <f5> org-babel-tangle
@@ -137,25 +178,17 @@ vim is not an editor it's a way of life.
 #+begin_src emacs-lisp :tangle .emacs
 #+end_src
 
-** Dependencies
-The packages that my emacs configuration depends on are in the list below
+** Repos
+*** MELPA
+Adding melpa to get org-roam
 
-#+name: deps-table
-| Package Name  | Repository | Note             |
-|---------------+------------+------------------|
-| evil          | elpa       | Vim mode         |
-| evil-org      | elpa       | Vim/Org compat.  |
-| markdown-mode | elpa       | Markdown support |
-| magit         | elpa       | Git mode         |
-
-To convert the above table of dependencies into the Emacs Lisp list that
-will get put into the .emacs config file, run ~~C-c C-c~~, then
-**remember to append ":tangle .emacs" to the results**
-#+begin_src emacs-lisp :var tbl=deps-table :results code :shebang ":tangle .emacs"
-(mapcar #'car tbl) 
-#+end_src
-
-#+RESULTS:
-#+begin_src emacs-lisp
-("evil" "evil-org" "markdown-mode" "magit")
+#+begin_src emacs-lisp :tangle .emacs
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Comment/uncomment this line to enable MELPA Stable if desired.
+;; See `package-archive-priorities` and `package-pinned-packages`.
+;; Most users will not need or want to do this.
+(add-to-list 'package-archives
+'("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 #+end_src
