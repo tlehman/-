@@ -80,7 +80,7 @@ fi
 #                  Check dependencies                                          #
 ################################################################################
 typeset -a DEPS
-DEPS=("zsh" "git" "ssh" "tmux" "jq" "fq" "yq" "fzf")
+DEPS=("zsh" "git" "ssh" "tmux" "jq" "yq" "fzf")
 for ((i = 1; i <= $#DEPS; i++)) {
 	if command which $DEPS[i] &> /dev/null; then
 		# yay, nothing to do here
