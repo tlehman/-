@@ -36,12 +36,10 @@ Mostly light mode and dark mode.
 #+end_src
 
 *** Font
-The font is Fira Code, height 140
+The font is Fira Code
 
 #+begin_src emacs-lisp :tangle .emacs
-  (custom-set-faces
-   '(default (
-  (t (:inherit nil :extend nil :stipple nil :background "#000000" :foreground "#ffffff" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight regular :height 140 :width normal :foundry "CTDB" :family "Fira Code")))))
+  (defvar face-font "Fira Code")
 #+end_src
 
 *** Highlight and Bars
@@ -152,14 +150,6 @@ will get put into the .emacs config file, run ~~C-c C-c~~, then
 ("evil" "evil-org" "markdown-mode" "magit" "org-roam")
 #+end_src
 
-** Mappings
-These are the custom keymappings I use.
-*** <f5> org-babel-tangle
-
-#+begin_src emacs-lisp :tangle .emacs
-  
-#+end_src
-
 ** Initialization
 *** Start the server
 The server runs a socket to listen to ~~emacsclient~~ calls.
@@ -179,7 +169,34 @@ vim is not an editor it's a way of life.
 
 #+begin_src emacs-lisp :tangle .emacs
 #+end_src
+*** Org-Mode stuff
 
+#+begin_src emacs-lisp :tangle .emacs
+  (require 'ob-shell)
+#+end_src
+** Mappings
+These are the custom keymappings I use.
+*** <f5> org-babel-tangle
+
+#+begin_src emacs-lisp :tangle .emacs
+  
+#+end_src
+
+** OS-Specific Variables
+
+#+begin_src emacs-lisp :tangle .emacs
+  (let ((os (string-trim (shell-command-to-string "uname"))))
+    (if (string-equal "Linux" os)
+       (progn
+	 (defvar face-font-size "14")))
+    (if (string-equal "Darwin" os)
+       (progn
+	 (defvar face-font-size "18")))
+  )
+
+  (defvar face-font-with-size (string-join (list face-font face-font-size) " "))
+  (set-frame-font face-font-with-size)
+#+end_src
 ** Repos
 *** MELPA
 Adding melpa to get org-roam
