@@ -20,7 +20,7 @@ autocmd BufNewFile,BufRead *.dapper set syntax=dockerfile
 
 
 " Cursor line
-"colorscheme ron
+colorscheme elflord
 highlight CursorLine cterm=none ctermbg=234
 
 function LightMode()
