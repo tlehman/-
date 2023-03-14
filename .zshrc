@@ -63,7 +63,6 @@ case `uname` in
 	# K8s auto-complete
 	autoload -U +X compinit && compinit
 	source <(kubectl completion zsh)
-	source <(kind completion zsh)
 	;;
 	Linux)
 esac
