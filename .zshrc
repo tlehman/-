@@ -51,22 +51,6 @@ setopt share_history
 
 
 ################################################################################
-#                  OS-specific stuff                                           #
-################################################################################
-case `uname` in
-	Darwin)
-
-	eval "$(/opt/homebrew/bin/brew shellenv)"
-	export PATH=$PATH:~/Downloads/cwebx/
-	alias code='open -a Visual\ Studio\ Code'
-
-	# K8s auto-complete
-	autoload -U +X compinit && compinit
-	source <(kubectl completion zsh)
-	;;
-	Linux)
-esac
-################################################################################
 #                  Tab completion                                              #
 ################################################################################
 autoload -U +X compinit && compinit
@@ -75,19 +59,6 @@ if command which helm &> /dev/null; then
 	source <(helm completion zsh)
 fi
 
-################################################################################
-#                  Check dependencies                                          #
-################################################################################
-typeset -a DEPS
-DEPS=("zsh" "git" "ssh" "tmux" "jq" "yq" "fzf")
-for ((i = 1; i <= $#DEPS; i++)) {
-	if command which $DEPS[i] &> /dev/null; then
-		# yay, nothing to do here
-	else
-		dep=$DEPS[i]
-		print "$dep is not installed"
-    fi
-}
 ################################################################################
 #                  Git info in the prompt                                      #
 ################################################################################
@@ -123,17 +94,6 @@ precmd() {
 
 
 ################################################################################
-#                  Kubernetes (k8s, K8s, k3s, etc,)                            #
-################################################################################
-# k8s aliases
-#alias k='kubectl --insecure-skip-tls-verify'
-alias k=kubectl
-if ! command $(type -p "helm" > /dev/null); then
-	source <(kubectl completion zsh)
-	source <(helm completion zsh)
-fi
-
-################################################################################
 #                  The PROMPTS                                                 #
 ################################################################################
 setopt PROMPT_SUBST
@@ -142,22 +102,7 @@ setopt PROMPT_SUBST
 
 # https://unix.stackexchange.com/a/273567 (shorten pwd after 4 levels deep)
 PROMPT="%F{green}%n@%m%f:%F{cyan}%(4~|.../%3~|%~)%f %% "
-RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
-
-# Current Kubernetes Context
-kubectx() { k config view --minify | yq .current-context }
-
-if command kubectl --insecure-skip-tls-verify config view >/dev/null; then 
-	RPROMPT="$RPROMPT %F{cyan}k8s⎈ \$(kubectx)%f"
-fi
-
-################################################################################
-#                  Go language settings                                        #
-################################################################################
-export GO111MODULE=on
-if [ -d /usr/local/go ]; then
-	export PATH=$PATH:~/go/bin:/usr/local/go/bin
-fi
+#RPROMPT="%F{yellow}\$vcs_info_msg_0_%f"
 
 ################################################################################
 #                  Hue bulbs                                                   #
@@ -200,11 +145,6 @@ office_on() {
 }
 
 ################################################################################
-#                  Time                                                        #
-################################################################################
-function nows() { date -u "+%Y-%m-%d %R UTC"; date "+%Y-%m-%d %R %Z"; }
-
-################################################################################
 #                  Buffer shortcuts                                            #
 ################################################################################
 function buffer-insert-date() {
@@ -218,27 +158,6 @@ function buffer-insert-192-168-1() {
 }
 function buffer-insert-lehman-house() {
 	LBUFFER+="lehman.house"
-}
-function buffer-insert-harvester-system() {
-	LBUFFER+="harvester-system"
-}
-function buffer-kubectl-get-expand() {
-	if [ "$BUFFER" = "kgs" ]; then
-		zle backward-delete-word
-		BUFFER+='k get services'
-	elif [ "$BUFFER" = "khs" ]; then
-		zle backward-delete-word
-		BUFFER+='k -n harvester-system'
-	elif [ "$BUFFER" = "kgn" ]; then
-		zle backward-delete-word
-		BUFFER+='k get nodes'
-	elif [ "$BUFFER" = "kgp" ]; then
-		zle backward-delete-word
-		BUFFER+='k get pods'
-	elif [ "$BUFFER" = "kc" ]; then
-		zle backward-delete-word
-		BUFFER+='k cluster-info'
-	fi
 }
 function buffer-accept-line-expand-ls() {
 	# type 'lsth' and then <Alt>-l to expand and enter
@@ -271,17 +190,3 @@ bindkey $'^[y' buffer-append-yaml
 bindkey $'^[s' buffer-insert-harvester-system
 
 bindkey '^r' history-incremental-search-backward
-################################################################################
-#                  Z                                                           #
-################################################################################
-if [[ ! -d ~/bin ]]; then
-	mkdir ~/bin
-fi
-if [[ ! -f ~/bin/zsh-z.plugin.zsh ]]; then
-	echo "Downloading zsh-z plugin"
-	(cd ~/bin && wget https://raw.githubusercontent.com/agkozak/zsh-z/master/zsh-z.plugin.zsh)
-fi
-source ~/bin/zsh-z.plugin.zsh
-
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH=/opt/homebrew/lib/ruby/gems/3.2.0/bin:$PATH
